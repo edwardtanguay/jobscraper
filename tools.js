@@ -14,6 +14,10 @@ export const createFile = (fileName, content) => {
 	fs.writeFileSync('output/' + fileName, content);
 }
 
+export const getJobsFromHtml = (html) => {
+	return 'ok';
+}
+
 // const getHackerNewsData = (html) => {
 // 	const data = [];
 // 	const nextData = {};
