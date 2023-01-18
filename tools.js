@@ -12,28 +12,26 @@ export const getHtmlFromUrl = (url) => {
 
 export const createFile = (fileName, content) => {
 	fs.writeFileSync('output/' + fileName, content);
-}
+};
 
 export const getJobsFromHtml = (html) => {
-	return 'ok';
-}
+	const data = [];
+	const $ = cheerio.load(html);
+	$('a').each((i, elem) => {
+		const href = String($(elem).attr('href')); // e.g. /jobsuche/p211338?start=0&limit=39&ref=Jobsuche
+		if (href && href.startsWith('/jobsuche/')) {
+			const parts = href.split('?');
+			const urlSuffix = parts[0];
+			const url = 'https://www.get-in-it.de' + urlSuffix;
+			data.push(url);
+		}
+	});
 
-// const getHackerNewsData = (html) => {
-// 	const data = [];
-// 	const nextData = {};
-// 	const $ = cheerio.load(html);
-// 	$('table.itemlist tr td:nth-child(3)').each((i, elem) => {
-// 		const pointText = $(elem)
-// 			.parent()
-// 			.next()
-// 			.find('td.subtext')
-// 			.find('span.score')
-// 			.text();
-// 		data.push({
-// 			title: $(elem).text(),
-// 			link: $(elem).find('a.storylink').attr('href'),
-// 			pointText: qstr.isEmpty(pointText) ? '??? points' : pointText
-// 		});
-// 	});
-// 	return data;
-// };
+	// $('table.itemlist tr td:nth-child(3)').each((i, elem) => {
+	// 	data.push({
+	// 		title: $(elem).text(),
+	// 		link: $(elem).find('a.storylink').attr('href')
+	// 	});
+	// });
+	return data;
+};
