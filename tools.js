@@ -1,4 +1,5 @@
 import * as cheerio from 'cheerio';
+import fs from 'fs';
 import axios from 'axios';
 
 export const getHtmlFromUrl = (url) => {
@@ -8,6 +9,10 @@ export const getHtmlFromUrl = (url) => {
 		resolve(html);
 	});
 };
+
+export const createFile = (fileName, content) => {
+	fs.writeFileSync('output/' + fileName, content);
+}
 
 // const getHackerNewsData = (html) => {
 // 	const data = [];
